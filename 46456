@@ -1,0 +1,29 @@
+部署方法：
+
+下载地址：http://git.oschina.net/tavenli/port-forward/releases
+
+下载编译好的程序包，并解压程序包，
+执行 start.sh （Linux）或 start.bat （Win）命令
+打开浏览器，进入控制台，打开 http://127.0.0.1:8080/login
+输入用户 admin 密码 123456 进入控制台。
+注意：由于需要登录后才能下载，所以博客做了一个Linux版本的分流地址:
+https://cikeblog.com/s/forward.zip
+
+附上shell代码：
+
+yum install unzip -y
+wget https://cikeblog.com/s/forward.zip
+unzip forward.zip
+cd forward-server
+chmod +x *
+./start.sh
+然后打开浏览器，进入控制台，打开 http://127.0.0.1:8080
+输入用户 admin 密码 123456 即可进入控制台。
+
+注意：部分nat机器未分配8080端口，所以我们需要进行端口转发，可以使用博客推荐的socat进行转发，也可以直接使用iptables，简单方便。
+
+例如：将本地8080端口转发到10000端口：
+
+iptables -t nat -A PREROUTING -p tcp --dport 10000 -j REDIRECT --to-ports 8080
+iptables-save
+这样就可以使用 http://127.0.0.1:10000进入控制台。
